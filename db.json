@@ -1,39 +1,28 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": 0,
       "user": "juan",
       "password": "abc123"
     },
     {
-      "id": 2,
+      "id": 1,
       "user": "szoke",
       "password": "abc123"
+    }
+  ],
+  "notes": [
+    {
+      "title": "Comprar pan",
+      "description": "Ir al supermercado y comprar leche descremada",
+      "importance": "Baja",
+      "id": 0
     },
     {
-      "user": "hola",
-      "password": "123",
-      "id": 3
-    },
-    {
-      "user": "ron",
-      "password": "ellanomequiere",
-      "id": 4
-    },
-    {
-      "user": "mark",
-      "password": "123",
-      "id": 5
-    },
-    {
-      "user": "david",
-      "password": "123",
-      "id": 6
-    },
-    {
-      "user": "ronito",
-      "password": "123",
-      "id": 7
+      "title": "Esto es una edicion",
+      "description": "de la nota",
+      "importance": "Alta",
+      "id": 1
     }
   ]
 }

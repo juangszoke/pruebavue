@@ -31,7 +31,7 @@
           />
           <div align="right">
             <q-btn type="submit" color="primary" :v-close-popup="completed"
-              >Crear nota</q-btn
+              >crear nota</q-btn
             >
             <q-btn
               class="q-ml-md"
@@ -52,12 +52,16 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  data() {
-    const newNote = {
-      title: null,
-      description: null,
-      importance: null,
-    };
+  props: {
+    editNote: {
+      type: Object,
+      required: false
+    }
+  },
+  data(props) {
+    
+    let newNote = props.editNote
+    console.log(props.editNote)
     return {
       dialog: true,
       newNote,

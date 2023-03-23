@@ -32,6 +32,7 @@
         >
         </q-btn>
       </q-card-section>
+      <p v-if="error" class="text-bold">Usuario ya registrado</p>
     </q-card>
     <router-link class="q-pa-md enlace" to="/login">
       <q-btn color="primary">Log in</q-btn>
@@ -50,21 +51,36 @@ export default defineComponent({
     return {
       user: null,
       password: null,
+      error: false
     };
   },
   methods: {
     submitForm() {
-      axios
-        .post("http://localhost:3000/users", {
-          user: this.user,
-          password: this.password,
-        })
-        .then(() => {
-          this.$router.push("/login");
+
+      axios.get(`http://localhost:3000/users?user=${this.user}`)
+      .then((response) => {
+          if (response.data[0]) {
+            this.error = true;
+          } else {
+            this.error = false
+            axios
+            .post("http://localhost:3000/users", {
+              user: this.user,
+              password: this.password,
+            })
+            .then(() => {
+              this.$router.push("/login");
+             })
+            .catch((error) => {
+              console.log(error);
+             });
+          }
         })
         .catch((error) => {
           console.log(error);
         });
+      
+      
     },
   },
 });
