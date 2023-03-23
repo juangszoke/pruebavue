@@ -2,7 +2,7 @@
   <q-dialog v-model="dialog" persistent>
     <q-card class="q-pa-md q-mb-md maincard" flat bordered>
       <q-card-section>
-        <h4 class="q-ma-none">Crear nueva nota</h4>
+        <h4 class="q-ma-none text-center">{{ action }}</h4>
       </q-card-section>
       <q-card-section>
         <q-form @submit="submitForm">
@@ -31,7 +31,7 @@
           />
           <div align="right">
             <q-btn type="submit" color="primary" :v-close-popup="completed"
-              >crear nota</q-btn
+              >{{ action }}</q-btn
             >
             <q-btn
               class="q-ml-md"
@@ -55,10 +55,13 @@ export default defineComponent({
     editNote: {
       type: Object,
       required: false
+    },
+    action: {
+      type: String,
+      required: true
     }
   },
   data() {
-    
     return {
       dialog: true,
       newNote: {...this.editNote},

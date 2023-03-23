@@ -4,7 +4,7 @@
       <div class="size-note ">
         <h3 class="q-mt-sm text-center full-width">Notas</h3>
       </div>
-      <div class="flex content-center">
+      <div>
         <router-link class="q-pl-md logout" to="/login">
           <q-btn color="primary" class="q-ml-auto q-mt-md ">Cerrar sesion</q-btn>
         </router-link>
@@ -19,12 +19,12 @@
         :key="index"
       >
         <div class="size-note">
-          <h2 class="text-h6 q-pl-sm">{{ note.title }}</h2>
+          <h6 class="q-my-md">{{ note.title }}</h6>
           <p class="q-mb-xs text-justify">
             {{ note.description }}
           </p>
           <p
-            class="text-caption"
+            class="text-caption q-mt-md"
             :class="
               note.importance === 'Alta'
                 ? 'text-negative'
@@ -32,7 +32,6 @@
                 ? 'text-warning'
                 : 'text-positive'
             "
-            style="margin-top: 10px"
           >
             Importancia: {{ note.importance }}
           </p>
@@ -56,6 +55,7 @@
   <my-dialog
     v-if="showDialog"
     :edit-note="edit"
+    :action="action"
     @submit="(data) => addNote(data)"
     @cancel="closeDialog"
   />
@@ -80,7 +80,8 @@ export default defineComponent({
         title: null,
         description: null,
         importance: null
-      }
+      },
+      action: null
     }
   },
   methods: {
@@ -93,6 +94,7 @@ export default defineComponent({
       }
     },
     openDialog() {
+      this.action = 'Crear nota'
       this.showDialog = true;
     },
     addNote(note) {
@@ -146,6 +148,7 @@ export default defineComponent({
     },
     selectedNote(id){
       this.edit = this.notes[id]
+      this.action = 'Editar nota'
       this.showDialog = true;
 
     },
