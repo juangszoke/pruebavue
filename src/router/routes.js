@@ -1,20 +1,19 @@
-
 const routes = [
   {
-    path: '/',
-    component: () => import('src/layouts/MainLayout.vue'),
-   
+    path: "/",
+    component: () => import("src/pages/MainLayout.vue"),
   },
   {
-    path: '/new',
-    component: () => import('src/components/CreateNote.vue'),
-   
+    path: "/login",
+    component: () => import("src/login/LoginPage.vue"),
   },
-
+  {
+    path: "/register",
+    component: () => import("src/login/RegisterPage.vue"),
+  },
 
   // Always leave this as last one,
   // but you can also remove it
-  
-]
+];
 
-export default routes
+export default routes;
