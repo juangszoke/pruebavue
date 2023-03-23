@@ -24,10 +24,16 @@
         />
       </q-card-section>
       <q-card-section class="q-px-none q-py-md q-pt-none">
-        <q-btn class="full-width" color="primary" label="register"> </q-btn>
+        <q-btn
+          @click="submitForm"
+          class="full-width"
+          color="primary"
+          label="register"
+        >
+        </q-btn>
       </q-card-section>
     </q-card>
-    <router-link class="q-pa-md ron" to="/login">
+    <router-link class="q-pa-md enlace" to="/login">
       <q-btn color="primary">Log in</q-btn>
     </router-link>
   </div>
@@ -35,6 +41,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import axios from "axios";
 
 export default defineComponent({
   name: "RegisterPage",
@@ -44,6 +51,21 @@ export default defineComponent({
       user: null,
       password: null,
     };
+  },
+  methods: {
+    submitForm() {
+      axios
+        .post("http://localhost:3000/users", {
+          user: this.user,
+          password: this.password,
+        })
+        .then(() => {
+          this.$router.push("/login");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 });
 </script>
@@ -59,5 +81,13 @@ export default defineComponent({
     width: 58%;
     min-width: none;
   }
+}
+
+.enlace {
+  text-decoration: none;
+}
+
+.enlace:visited {
+  color: black;
 }
 </style>

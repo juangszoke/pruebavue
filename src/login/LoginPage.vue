@@ -24,10 +24,12 @@
         />
       </q-card-section>
       <q-card-section class="q-px-none q-py-md q-pt-none">
-        <q-btn class="full-width" color="primary" label="Login"> </q-btn>
+        <q-btn @click="login" class="full-width" color="primary" label="Login">
+        </q-btn>
       </q-card-section>
+      <p v-if="error">error en los datos</p>
     </q-card>
-    <router-link class="q-pa-md ron" to="/register">
+    <router-link class="q-pa-md enlace" to="/register">
       <q-btn color="primary">register</q-btn>
     </router-link>
   </div>
@@ -35,6 +37,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import axios from "axios";
 
 export default defineComponent({
   name: "LoginPage",
@@ -43,7 +46,27 @@ export default defineComponent({
     return {
       user: null,
       password: null,
+      error: false,
     };
+  },
+  methods: {
+    login() {
+      axios
+        .get(
+          `http://localhost:3000/users?user=${this.user}&password=${this.password}`
+        )
+        .then((response) => {
+          if (response.data[0]) {
+            this.error = false;
+            this.$router.push("/");
+          } else {
+            this.error = true;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 });
 </script>
@@ -61,11 +84,11 @@ export default defineComponent({
   }
 }
 
-.ron {
+.enlace {
   text-decoration: none;
 }
 
-.ron:visited {
+.enlace:visited {
   color: black;
 }
 </style>
