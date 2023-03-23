@@ -9,6 +9,11 @@
       "id": 1,
       "user": "szoke",
       "password": "abc123"
+    },
+    {
+      "user": null,
+      "password": null,
+      "id": 2
     }
   ],
   "notes": [
@@ -16,12 +21,14 @@
       "title": "Comprar pan",
       "description": "Ir al supermercado y comprar leche descremada",
       "importance": "Baja",
+      "creator": "juan",
       "id": 0
     },
     {
       "title": "Esto es una edicion",
-      "description": "de la nota",
+      "description": "de la notaddddd",
       "importance": "Alta",
+      "creator": "juan",
       "id": 1
     }
   ]

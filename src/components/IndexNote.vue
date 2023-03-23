@@ -1,12 +1,16 @@
 <template>
   <q-card class="q-pa-md q-mb-md" flat bordered>
-    <q-card-section>
-      <div class="row justify-between">
-        <h3 class="q-ma-none">Notas</h3>
+    <q-card-section class="flex justify-between">
+      <div class="size-note ">
+        <h3 class="q-mt-sm text-center full-width">Notas</h3>
+      </div>
+      <div class="flex content-center">
         <router-link class="q-pl-md logout" to="/login">
-          <q-btn color="primary" class="q-ml-auto q-mt-md">Cerrar sesion</q-btn>
+          <q-btn color="primary" class="q-ml-auto q-mt-md ">Cerrar sesion</q-btn>
         </router-link>
       </div>
+        
+      
     </q-card-section>
     <q-card-section>
       <q-card
@@ -20,7 +24,7 @@
             {{ note.description }}
           </p>
           <p
-            class="importance text-caption"
+            class="text-caption"
             :class="
               note.importance === 'Alta'
                 ? 'text-negative'
@@ -32,6 +36,10 @@
           >
             Importancia: {{ note.importance }}
           </p>
+          <p class="text-caption">
+           Escrito por: {{ note.creator }}
+          </p>
+
         </div>
         <div class="flex content-center"> 
           <q-icon @click="deleteNote(note.id)" color="negative" class="q-pa-md" size="lg" name="delete" />
@@ -91,12 +99,12 @@ export default defineComponent({
       this.edit.id ? this.editNote(note) : this.createNote(note);
     },
     createNote(note){
-      console.log('creandoo')
       axios
       .post("http://localhost:3000/notes", {
         title: note.title,
         description: note.description,
-        importance: note.importance
+        importance: note.importance,
+        creator:'juan'
       })
       .then(() => {
         this.updateNotes()
@@ -109,12 +117,12 @@ export default defineComponent({
     },
     editNote(note){
       
-    console.log('editandoo')
       axios
       .put(`http://localhost:3000/notes/${this.edit.id}`, {
         title: note.title,
         description: note.description,
-        importance: note.importance
+        importance: note.importance,
+        creator:'juan'
       })
       .then(() => {
         this.updateNotes()

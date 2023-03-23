@@ -13,6 +13,7 @@
           v-model="user"
           dense
           placeholder="Ingresa un usuario"
+          :rules="[(val) => !!val || 'Debes ingresar un usuario']"
         />
         <p class="q-mb-xs q-mt-md text-bold">Clave</p>
         <q-input
@@ -21,6 +22,7 @@
           placeholder="Ingresa una contraseña"
           type="password"
           dense
+          :rules="[(val) => !!val || 'Debes ingresar una contraseña']"
         />
       </q-card-section>
       <q-card-section class="q-px-none q-py-md q-pt-none">

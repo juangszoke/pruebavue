@@ -13,6 +13,7 @@
           v-model="user"
           dense
           placeholder="Ingresa tu usuario"
+          :rules="[(val) => !!val || 'Debes ingresar tu usuario']"
         />
         <p class="q-mb-xs q-mt-md text-bold">Clave</p>
         <q-input
@@ -21,6 +22,7 @@
           placeholder="Ingresa tu contraseña"
           type="password"
           dense
+          :rules="[(val) => !!val || 'Debes ingresar tu contraseña']"
         />
       </q-card-section>
       <q-card-section class="q-px-none q-py-md q-pt-none">
@@ -38,6 +40,7 @@
 <script>
 import { defineComponent } from "vue";
 import axios from "axios";
+
 
 export default defineComponent({
   name: "LoginPage",

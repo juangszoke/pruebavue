@@ -2,7 +2,7 @@
   <q-dialog v-model="dialog" persistent>
     <q-card class="q-pa-md q-mb-md maincard" flat bordered>
       <q-card-section>
-        <h3 class="q-ma-none">Crear nueva nota</h3>
+        <h4 class="q-ma-none">Crear nueva nota</h4>
       </q-card-section>
       <q-card-section>
         <q-form @submit="submitForm">
@@ -35,7 +35,6 @@
             >
             <q-btn
               class="q-ml-md"
-              type="submit"
               color="negative"
               @click="$emit('cancel')"
               v-close-popup
@@ -58,13 +57,11 @@ export default defineComponent({
       required: false
     }
   },
-  data(props) {
+  data() {
     
-    let newNote = props.editNote
-    console.log(props.editNote)
     return {
       dialog: true,
-      newNote,
+      newNote: {...this.editNote},
       completed: true,
       importanceOptions: ["Baja", "Media", "Alta"],
     };
