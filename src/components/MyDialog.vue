@@ -30,9 +30,9 @@
             :rules="[(val) => !!val || 'Debes seleccionar un tipo']"
           />
           <div align="right">
-            <q-btn type="submit" color="primary" :v-close-popup="completed"
-              >{{ action }}</q-btn
-            >
+            <q-btn type="submit" color="primary" :v-close-popup="completed">{{
+              action
+            }}</q-btn>
             <q-btn
               class="q-ml-md"
               color="negative"
@@ -54,17 +54,17 @@ export default defineComponent({
   props: {
     editNote: {
       type: Object,
-      required: false
+      required: false,
     },
     action: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       dialog: true,
-      newNote: {...this.editNote},
+      newNote: { ...this.editNote },
       completed: true,
       importanceOptions: ["Baja", "Media", "Alta"],
     };

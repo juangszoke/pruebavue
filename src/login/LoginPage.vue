@@ -41,7 +41,6 @@
 import { defineComponent } from "vue";
 import axios from "axios";
 
-
 export default defineComponent({
   name: "LoginPage",
 
@@ -61,6 +60,8 @@ export default defineComponent({
         .then((response) => {
           if (response.data[0]) {
             this.error = false;
+            localStorage.setItem("user", response.data[0].user);
+            localStorage.setItem("id", response.data[0].id);
             this.$router.push("/");
           } else {
             this.error = true;

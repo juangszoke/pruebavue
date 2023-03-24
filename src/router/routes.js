@@ -1,7 +1,10 @@
+import authGuard from "src/authGuard.js";
+
 const routes = [
   {
     path: "/",
     component: () => import("src/pages/MainLayout.vue"),
+    beforeEnter: authGuard,
   },
   {
     path: "/login",

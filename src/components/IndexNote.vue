@@ -1,53 +1,69 @@
 <template>
-  <q-card class="q-pa-md q-mb-md" flat bordered>
-    <q-card-section class="flex justify-between">
-      <div class="size-note ">
-        <h3 class="q-mt-sm text-center full-width">Notas</h3>
-      </div>
-      <div>
-        <router-link class="q-pl-md logout" to="/login">
-          <q-btn color="primary" class="q-ml-auto q-mt-md ">Cerrar sesion</q-btn>
+  <q-card class="q-px-md q-mb-md cardPrincipal" flat bordered>
+    <q-card-section class="full-width">
+      <div class="row q-pa-md full-width flex justify-between">
+        <h5 class="title q-ma-none">Bienvenido {{ userActive }}</h5>
+        <router-link @click="logout()" class="q-pl-md logout" to="/login">
+          <q-btn color="primary" size="sm">Cerrar sesión</q-btn>
         </router-link>
       </div>
-        
-      
+      <div class="flex justify-center">
+        <h3 class="q-ma-none">Notas</h3>
+      </div>
     </q-card-section>
     <q-card-section>
-      <q-card
-        class="note q-pa-md q-mb-lg flex justify-between"
-        v-for="(note, index) in notes"
-        :key="index"
-      >
-        <div class="size-note">
-          <h6 class="q-my-md">{{ note.title }}</h6>
-          <p class="q-mb-xs text-justify">
-            {{ note.description }}
-          </p>
-          <p
-            class="text-caption q-mt-md"
-            :class="
-              note.importance === 'Alta'
-                ? 'text-negative'
-                : note.importance === 'Media'
-                ? 'text-warning'
-                : 'text-positive'
-            "
-          >
-            Importancia: {{ note.importance }}
-          </p>
-          <p class="text-caption">
-           Escrito por: {{ note.creator }}
-          </p>
-
-        </div>
-        <div class="flex content-center"> 
-          <q-icon @click="deleteNote(note.id)" color="negative" class="q-pa-md" size="lg" name="delete" />
-          <q-icon @click="selectedNote(note.id)" color="yellow-6" class="q-pa-md" size="lg" name="edit" />
-        </div>
-      </q-card>
+      <div class="row q-px-md flex justify-around">
+        <q-card
+          class="note q-pa-md q-ma-lg flex justify-between"
+          v-for="(note, index) in notes"
+          :key="index"
+        >
+          <div class="full-width">
+            <h6 class="q-my-md">{{ note.title }}</h6>
+            <p class="q-mb-xs text-justify">
+              {{ note.description }}
+            </p>
+            <p
+              class="text-caption q-mt-md"
+              :class="
+                note.importance === 'Alta'
+                  ? 'text-negative'
+                  : note.importance === 'Media'
+                  ? 'text-warning'
+                  : 'text-positive'
+              "
+            >
+              Importancia: {{ note.importance }}
+            </p>
+            <p class="text-caption">Escrito por: {{ note.creator }}</p>
+          </div>
+          <div class="flex content-center">
+            <q-icon
+              v-if="!checkNote(note.creator)"
+              @click="deleteNote(note.id)"
+              color="negative"
+              class="q-pa-md"
+              size="lg"
+              name="delete"
+            />
+            <q-icon
+              v-if="!checkNote(note.creator)"
+              @click="selectedNote(note.id)"
+              color="yellow-6"
+              class="q-pa-md"
+              size="lg"
+              name="edit"
+            />
+          </div>
+        </q-card>
+      </div>
     </q-card-section>
     <div align="right" class="q-pa-md">
-      <q-btn @click="openDialog" color="primary" class="q-ml-auto q-mt-md"
+      <q-btn
+        @click="openDialog"
+        size="sm"
+        color="primary"
+        class="q-ml-auto q-mt-md"
         >Crear nueva Nota</q-btn
       >
     </div>
@@ -64,7 +80,7 @@
 <script>
 import { defineComponent } from "vue";
 import MyDialog from "src/components/MyDialog";
-import axios from 'axios';
+import axios from "axios";
 
 export default defineComponent({
   name: "IndexNote",
@@ -79,104 +95,110 @@ export default defineComponent({
       edit: {
         title: null,
         description: null,
-        importance: null
+        importance: null,
       },
-      action: null
-    }
+      action: null,
+      userActive: localStorage.getItem("user"),
+    };
   },
   methods: {
-    async updateNotes(){
+    async updateNotes() {
       try {
-        const response = await axios.get('http://localhost:3000/notes')
-        this.notes = response.data
-      }catch (error) {
-        console.log(error)
+        const response = await axios.get("http://localhost:3000/notes");
+        this.notes = response.data;
+      } catch (error) {
+        console.log(error);
       }
     },
     openDialog() {
-      this.action = 'Crear nota'
+      this.action = "Crear nota";
       this.showDialog = true;
     },
     addNote(note) {
       this.edit.id ? this.editNote(note) : this.createNote(note);
     },
-    createNote(note){
+    createNote(note) {
       axios
-      .post("http://localhost:3000/notes", {
-        title: note.title,
-        description: note.description,
-        importance: note.importance,
-        creator:'juan'
-      })
-      .then(() => {
-        this.updateNotes()
-        this.closeDialog()
+        .post("http://localhost:3000/notes", {
+          title: note.title,
+          description: note.description,
+          importance: note.importance,
+          creator: localStorage.getItem("user"),
         })
-      .catch((error) => {
-        console.log(error);
-      });
-
+        .then(() => {
+          this.updateNotes();
+          this.closeDialog();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    editNote(note){
-      
+    editNote(note) {
       axios
-      .put(`http://localhost:3000/notes/${this.edit.id}`, {
-        title: note.title,
-        description: note.description,
-        importance: note.importance,
-        creator:'juan'
-      })
-      .then(() => {
-        this.updateNotes()
-        this.closeDialog()
+        .put(`http://localhost:3000/notes/${this.edit.id}`, {
+          title: note.title,
+          description: note.description,
+          importance: note.importance,
+          creator: localStorage.getItem("user"),
         })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then(() => {
+          this.updateNotes();
+          this.closeDialog();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    deleteNote(id){
+    deleteNote(id) {
       axios
-      .delete(`http://localhost:3000/notes/${id}`, {
-      })
-      .then(() => {
-        this.updateNotes()
+        .delete(`http://localhost:3000/notes/${id}`, {})
+        .then(() => {
+          this.updateNotes();
         })
-      .catch((error) => {
-        console.log(error);
-      });
-
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    selectedNote(id){
-      this.edit = this.notes[id]
-      this.action = 'Editar nota'
+    async selectedNote(id) {
+      const response = await axios.get(`http://localhost:3000/notes/${id}`);
+      this.edit = response.data;
+      this.action = "Editar nota";
       this.showDialog = true;
-
     },
     closeDialog() {
       this.showDialog = false;
       this.edit = {
         title: null,
         description: null,
-        importance: null
-      }
-    }
-    
+        importance: null,
+      };
+    },
+    logout() {
+      localStorage.clear();
+    },
+    checkNote(user) {
+      return localStorage.getItem("user") !== user;
+    },
   },
   async created() {
     try {
-      const response = await axios.get('http://localhost:3000/notes')
-      this.notes = response.data
-    }catch (error) {
-      console.log(error)
+      const response = await axios.get("http://localhost:3000/notes");
+      this.notes = response.data;
+    } catch (error) {
+      console.log(error);
     }
-  }
+  },
 });
 </script>
 
 <style scoped>
+.cardPrincipal {
+  background-color: #f5f5dc;
+}
 .note {
   background-color: #f9f9f9;
   border-left: 4px solid #3f51b5;
+  width: 40%;
 }
 
 .note:hover {
@@ -201,13 +223,13 @@ export default defineComponent({
 .logout:visited {
   color: black;
 }
-.size-note {
-  width: 85%;
-}
-@media (max-width: 1053px) {
-  .size-note {
-     width: 100%;
-  }
+.head-title {
+  width: 93%;
 }
 
+@media (max-width: 700px) {
+  .note {
+    width: 100%;
+  }
+}
 </style>
