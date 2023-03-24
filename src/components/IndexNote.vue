@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-px-md q-mb-md cardPrincipal" flat bordered>
+  <q-card class="q-px-md q-mb-md principal-card" flat bordered>
     <q-card-section class="full-width">
       <div class="row q-pa-md full-width flex justify-between">
         <h5 class="title q-ma-none">Bienvenido {{ userActive }}</h5>
@@ -18,13 +18,13 @@
           v-for="(note, index) in notes"
           :key="index"
         >
-          <div class="full-width">
-            <h6 class="q-my-md">{{ note.title }}</h6>
-            <p class="q-mb-xs text-justify">
+          <div class="title-note full-width">
+            <h5 class="q-mb-md q-mt-none">{{ note.title }}</h5>
+            <p class="information q-mb-none q-py-sm text-justify">
               {{ note.description }}
             </p>
             <p
-              class="text-caption q-mt-md"
+              class="information text-caption q-mb-none q-py-sm"
               :class="
                 note.importance === 'Alta'
                   ? 'text-negative'
@@ -35,26 +35,28 @@
             >
               Importancia: {{ note.importance }}
             </p>
-            <p class="text-caption">Escrito por: {{ note.creator }}</p>
-          </div>
-          <div class="flex content-center">
+          <div class="row justify-between">
+            <p class="q-pt-sm q-mb-none information text-caption">Escrito por: {{ note.creator }}</p>
+            <div>
             <q-icon
-              v-if="!checkNote(note.creator)"
-              @click="deleteNote(note.id)"
-              color="negative"
-              class="q-pa-md"
-              size="lg"
-              name="delete"
-            />
-            <q-icon
-              v-if="!checkNote(note.creator)"
-              @click="selectedNote(note.id)"
-              color="yellow-6"
-              class="q-pa-md"
-              size="lg"
-              name="edit"
-            />
-          </div>
+                @click="deleteNote(note.id, checkNote(note.creator))"
+                color="black"
+                class="q-pa-sm"
+                :class="{allow: checkNote(note.creator)}"
+                size="sm"
+                name="delete"
+              />
+              <q-icon
+                @click="selectedNote(note.id, checkNote(note.creator) )"
+                color="black"
+                class="q-pa-sm"
+                :class="{allow: checkNote(note.creator)}"
+                size="sm"
+                name="edit"
+              />
+              </div>
+            </div> 
+          </div>   
         </q-card>
       </div>
     </q-card-section>
@@ -80,6 +82,7 @@
 <script>
 import { defineComponent } from "vue";
 import MyDialog from "src/components/MyDialog";
+import { useQuasar } from 'quasar'
 import axios from "axios";
 
 export default defineComponent({
@@ -89,6 +92,7 @@ export default defineComponent({
   },
 
   data() {
+    const $q = useQuasar()
     return {
       notes: null,
       showDialog: false,
@@ -99,6 +103,7 @@ export default defineComponent({
       },
       action: null,
       userActive: localStorage.getItem("user"),
+      $q
     };
   },
   methods: {
@@ -149,21 +154,36 @@ export default defineComponent({
           console.log(error);
         });
     },
-    deleteNote(id) {
-      axios
-        .delete(`http://localhost:3000/notes/${id}`, {})
-        .then(() => {
-          this.updateNotes();
+    deleteNote(id, value) {
+      if(!value){
+        axios
+          .delete(`http://localhost:3000/notes/${id}`, {})
+          .then(() => {
+            this.updateNotes();
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }else{
+        this.$q.notify({
+          type: 'negative',
+          message: 'Esta no es tu nota'
         })
-        .catch((error) => {
-          console.log(error);
-        });
+      }
     },
-    async selectedNote(id) {
-      const response = await axios.get(`http://localhost:3000/notes/${id}`);
-      this.edit = response.data;
-      this.action = "Editar nota";
-      this.showDialog = true;
+    async selectedNote(id, value) {
+      if(!value){
+        const response = await axios.get(`http://localhost:3000/notes/${id}`);
+        this.edit = response.data;
+        this.action = "Editar nota";
+        this.showDialog = true;
+      }else{
+        this.$q.notify({
+          type: 'negative',
+          message: 'Esta no es tu nota'
+        })
+      }
+      
     },
     closeDialog() {
       this.showDialog = false;
@@ -192,7 +212,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.cardPrincipal {
+.principal-card {
   background-color: #f5f5dc;
 }
 .note {
@@ -226,6 +246,14 @@ export default defineComponent({
 .head-title {
   width: 93%;
 }
+
+.allow{
+  cursor: not-allowed;
+}
+.information{
+  font-size: 18px;
+}
+
 
 @media (max-width: 700px) {
   .note {

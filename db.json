@@ -11,53 +11,39 @@
       "password": "abc123"
     },
     {
-      "user": null,
-      "password": null,
+      "user": "prueba",
+      "password": "123",
       "id": 2
     }
   ],
   "notes": [
     {
-      "title": "dgfdgf",
-      "description": "ggggf",
-      "importance": "Baja",
+      "title": "Pagar el alquiler",
+      "description": "Debo pagar el alquiler antes de fin de mes, de lo contrario pierdo mi habitacion",
+      "importance": "Alta",
       "creator": "juan",
       "id": 4
     },
     {
-      "title": "esto es una nota",
-      "description": "de voz",
+      "title": "Parcial el domingo",
+      "description": "Debo presentar un parcial en la universidad a las 8 pm, en el edificio principal",
       "importance": "Media",
       "creator": "szoke",
       "id": 5
     },
     {
-      "title": "ron",
-      "description": "esta ocupado",
-      "importance": "Baja",
-      "creator": "szoke",
-      "id": 6
-    },
-    {
-      "title": "alo",
-      "description": "sisoi",
-      "importance": "Media",
-      "creator": "juan",
-      "id": 7
-    },
-    {
-      "title": "gfdgf",
-      "description": "jjdfjfhdjfhjsdf fdsfjhdsjfdhjdfhsfdj hfdjdfhsjfdh fdjsh fdjssfhjdshfjdhsdj fdjfhsjfd shjfdhsjfdhdsj sdfhjf dshjf dsjfd fdhfjsdhfdjdfshjdff dsjfhdsj fhdsj fsjdfgggghhhhh jfdshdfjfdshsdj fdshjdf hfsdj",
+      "title": "Viaje de vacaciones",
+      "description": "Es necesario comprar cosas para poder realizar el viaje, de lo contrario posiblemente no pueda disfrutar del viaje por falta de implementos",
       "importance": "Alta",
       "creator": "szoke",
       "id": 8
     },
     {
-      "title": "fhg",
-      "description": "fhgfhgfhg",
+      "title": "Llevar documento de identidad",
+      "description": "Es importante llevar el documento de identidad para poder ingresar al local nocturno",
       "importance": "Media",
-      "creator": "szoke",
-      "id": 10
+      "creator": "juan",
+      "id": 9
     }
   ]
 }

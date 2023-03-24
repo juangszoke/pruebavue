@@ -6,49 +6,51 @@
       </q-card-section>
       <q-separator />
       <q-card-section class="q-pa-none">
-        <p class="q-mb-xs q-mt-lg text-bold">Usuario</p>
-        <q-input
-          class="q-ma-none"
-          outlined
-          v-model="user"
-          dense
-          placeholder="Ingresa tu usuario"
-          :rules="[(val) => !!val || 'Debes ingresar tu usuario']"
-        />
-        <p class="q-mb-xs q-mt-md text-bold">Clave</p>
-        <q-input
-          outlined
-          v-model="password"
-          placeholder="Ingresa tu contraseña"
-          type="password"
-          dense
-          :rules="[(val) => !!val || 'Debes ingresar tu contraseña']"
-        />
+        
+          <p class="q-mb-xs q-mt-lg text-bold">Usuario</p>
+          <q-input
+            class="q-ma-none"
+            outlined
+            v-model="user"
+            dense
+            placeholder="Ingresa tu usuario"
+            :rules="[(val) => !!val || 'Debes ingresar tu usuario']"
+          />
+          <p class="q-mb-xs q-mt-md text-bold">Clave</p>
+          <q-input
+            outlined
+            v-model="password"
+            placeholder="Ingresa tu contraseña"
+            type="password"
+            dense
+            :rules="[(val) => !!val || 'Debes ingresar tu contraseña']"
+          />
       </q-card-section>
       <q-card-section class="q-px-none q-py-md q-pt-none">
         <q-btn @click="login" class="full-width" color="primary" label="Login">
         </q-btn>
       </q-card-section>
-      <p v-if="error">error en los datos</p>
     </q-card>
     <router-link class="q-pa-md enlace" to="/register">
-      <q-btn color="primary">register</q-btn>
+      <q-btn color="primary">sign up</q-btn>
     </router-link>
   </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
+import { useQuasar } from 'quasar'
 import axios from "axios";
 
 export default defineComponent({
   name: "LoginPage",
 
   data() {
+    const $q = useQuasar()
     return {
       user: null,
       password: null,
-      error: false,
+      $q
     };
   },
   methods: {
@@ -64,7 +66,13 @@ export default defineComponent({
             localStorage.setItem("id", response.data[0].id);
             this.$router.push("/");
           } else {
-            this.error = true;
+            this.$q.notify({
+              type: 'negative',
+              message: 'Usuario o clave incorrecta'
+              })
+              this.user = null
+              this.password = null
+            
           }
         })
         .catch((error) => {

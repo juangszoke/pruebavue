@@ -1,6 +1,6 @@
 <template>
   <q-dialog v-model="dialog" persistent>
-    <q-card class="q-pa-md q-mb-md maincard" flat bordered>
+    <q-card class="dialog q-pa-md q-mb-md" flat bordered>
       <q-card-section>
         <h4 class="q-ma-none text-center">{{ action }}</h4>
       </q-card-section>
@@ -76,3 +76,11 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+.dialog{
+
+width: 100%;
+
+}
+</style>

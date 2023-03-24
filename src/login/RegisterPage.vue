@@ -44,16 +44,18 @@
 
 <script>
 import { defineComponent } from "vue";
+import { useQuasar } from 'quasar'
 import axios from "axios";
 
 export default defineComponent({
   name: "RegisterPage",
 
   data() {
+    const $q = useQuasar()
     return {
       user: null,
       password: null,
-      error: false
+      $q
     };
   },
   methods: {
@@ -62,7 +64,11 @@ export default defineComponent({
       axios.get(`http://localhost:3000/users?user=${this.user}`)
       .then((response) => {
           if (response.data[0]) {
-            this.error = true;
+            this.$q.notify({
+              type: 'negative',
+              message: 'Usuario ya registrado'
+              })
+              this.user = null
           } else {
             this.error = false
             axios
