@@ -30,12 +30,12 @@
             :rules="[(val) => !!val || 'Debes seleccionar un tipo']"
           />
           <div align="right">
-            <q-btn type="submit" color="primary" :v-close-popup="completed">{{
-              action
-            }}</q-btn>
+            <q-btn type="submit" push color="primary" :v-close-popup="completed">
+              {{action}}</q-btn>
             <q-btn
               class="q-ml-md"
               color="negative"
+              push
               @click="$emit('cancel')"
               v-close-popup
               >Cancelar</q-btn

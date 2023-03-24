@@ -1,14 +1,26 @@
 <template>
-  <q-card class="q-px-md q-mb-md principal-card" flat bordered>
+  <q-toolbar class="bg-primary q-py-none">
+    <q-toolbar-title>
+      <p class="q-mb-none text-white">Bienvenido {{ userActive }}</p>  
+    </q-toolbar-title>
+    <q-btn
+      push
+      @click="openDialog"
+      size="sm"
+      color="black"
+      class="q-pa-sm q-ma-none"
+    >
+      <q-icon class="q-mr-sm" name="note_add" />
+        Crear nueva Nota
+    </q-btn>
+    <router-link @click="logout()" class="q-pl-md logout" to="/login">
+      <q-btn text-color="white" color="black" push class="q-pa-sm q-ma-none" size="sm">Cerrar sesión</q-btn>
+    </router-link>
+  </q-toolbar>
+  <q-card class="q-px-md principal-card" flat bordered>
     <q-card-section class="full-width">
-      <div class="row q-pa-md full-width flex justify-between">
-        <h5 class="title q-ma-none">Bienvenido {{ userActive }}</h5>
-        <router-link @click="logout()" class="q-pl-md logout" to="/login">
-          <q-btn color="primary" size="sm">Cerrar sesión</q-btn>
-        </router-link>
-      </div>
       <div class="flex justify-center">
-        <h3 class="q-ma-none">Notas</h3>
+        <h3 class="q-mb-none q-mt-md">Notas</h3>
       </div>
     </q-card-section>
     <q-card-section>
@@ -61,13 +73,7 @@
       </div>
     </q-card-section>
     <div align="right" class="q-pa-md">
-      <q-btn
-        @click="openDialog"
-        size="sm"
-        color="primary"
-        class="q-ml-auto q-mt-md"
-        >Crear nueva Nota</q-btn
-      >
+      
     </div>
   </q-card>
   <my-dialog
@@ -218,7 +224,7 @@ export default defineComponent({
 .note {
   background-color: #f9f9f9;
   border-left: 4px solid #3f51b5;
-  width: 40%;
+  width: 70%;
 }
 
 .note:hover {
