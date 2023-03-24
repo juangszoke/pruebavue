@@ -7,14 +7,15 @@
       push
       @click="openDialog"
       size="sm"
-      color="black"
+      text-color="primary" 
+      color="white"
       class="q-pa-sm q-ma-none"
     >
       <q-icon class="q-mr-sm" name="note_add" />
-        Crear nueva Nota
+      Crear nueva Nota
     </q-btn>
     <router-link @click="logout()" class="q-pl-md logout" to="/login">
-      <q-btn text-color="white" color="black" push class="q-pa-sm q-ma-none" size="sm">Cerrar sesión</q-btn>
+      <q-btn text-color="primary" color="white" push class="q-pa-sm q-ma-none" size="sm">Cerrar sesión</q-btn>
     </router-link>
   </q-toolbar>
   <q-card class="q-px-md principal-card" flat bordered>
